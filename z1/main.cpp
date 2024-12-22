@@ -1,26 +1,7 @@
 #include <iostream>
 #include "AEROFLOT.h"
 
-void sortFlights(AEROFLOT* flights, int count) {
-    for (int i = 0; i < count - 1; ++i) {
-        for (int j = 0; j < count - i - 1; ++j) {
-            if (flights[j].getFlightNumber() > flights[j + 1].getFlightNumber()) {
-                std::swap(flights[j], flights[j + 1]);
-            }
-        }
-    }
-}
 
-void displayAllFlights(const AEROFLOT* flights, int count) {
-    if (count == 0) {
-        std::cout << "No flights available.\n";
-        return;
-    }
-    std::cout << "All recorded flights:\n";
-    for (int i = 0; i < count; ++i) {
-        std::cout << flights[i] << std::endl;
-    }
-}
 
 int main() {
     int count = 0;
@@ -30,8 +11,10 @@ int main() {
         std::cout << "Menu:\n";
         std::cout << "1. Add flight\n";
         std::cout << "2. Search flights by destination\n";
-        std::cout << "3. Display all flights\n";
-        std::cout << "4. Exit\n";
+        std::cout << "3. Edit flight\n";
+        std::cout << "4. Delete flight\n";
+        std::cout << "5. Show flights\n";
+        std::cout << "6. Exit\n";
         std::cout << "Choose an option: ";
         int choice;
         std::cin >> choice;
@@ -65,9 +48,27 @@ int main() {
                 std::cout << "No flights found for destination: " << destination << std::endl;
             }
 
-        } else if (choice == 3){
-            displayAllFlights(flights, count);
+        } else if (choice == 3) {
+            int index;
+            std::cout << "Enter index of flight to edit (0 to " << count - 1 << "): ";
+            std::cin >> index;
+            if (index >= 0 && index < count) {
+                editFlight(flights[index]);
+                sortFlights(flights, count);
+            } else {
+                std::cout << "Invalid index." << std::endl;
+            }
+
         } else if (choice == 4) {
+            int index;
+            std::cout << "Enter index of flight to delete (0 to " << count - 1 << "): ";
+            std::cin >> index;
+            deleteFlight(flights, count, index);
+            sortFlights(flights, count);
+
+        } else if(choice == 5) {
+            displayAllFlights(flights, count);
+        } else if (choice == 6) {
             break;
         } else {
             std::cout << "Invalid option. Try again.\n";

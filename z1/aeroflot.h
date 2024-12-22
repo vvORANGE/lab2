@@ -31,4 +31,9 @@ public:
     static void validateFlightNumber(int num);
 };
 
+void sortFlights(AEROFLOT* flights, int count);
+void displayAllFlights(const AEROFLOT* flights, int count);
+void editFlight(AEROFLOT& flight);
+void deleteFlight(AEROFLOT*& flights, int& count, int index);
+
 #endif // AEROFLOT_H
